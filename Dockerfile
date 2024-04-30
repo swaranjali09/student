@@ -15,19 +15,16 @@ RUN yum -y update && \
 RUN yum -y install unzip
 
 # Download and extract Tomcat
-RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.88/bin/apache-tomcat-9.0.88.zip && \
-    unzip apache-tomcat-9.0.88.zip -d /opt && \
-    rm -f apache-tomcat-9.0.88.zip && \
-    mv /opt/apache-tomcat-9.0.88 $CATALINA_HOME
-WORKDIR /opt/tomcat
-ADD https://s3-us-west-2.amazonaws.com/studentapi-cit/student.war webapps/
-ADD https://s3-us-west-2.amazonaws.com/studentapi-cit/mysql-connector.jar lib/
+RUN wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.91/bin/apache-tomcat-8.5.91.zip && \
+    unzip apache-tomcat-8.5.91.zip -d /opt && \
+    rm apache-tomcat-8.5.91.zip && \
+    mv /opt/apache-tomcat-8.5.91 $CATALINA_HOME
 
 # Set executable permissions for catalina.sh
 RUN chmod +x $CATALINA_HOME/bin/catalina.sh
 
 # Expose the default Tomcat port
-EXPOSE 8081
+EXPOSE 8090
 
 # Set the command to start Tomcat
 CMD ["/opt/tomcat/bin/catalina.sh", "run"]
