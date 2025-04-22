@@ -6,13 +6,15 @@ ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk \
     CATALINA_HOME=/opt/tomcat \
     PATH=$CATALINA_HOME/bin:$PATH
 
-# Install Java 8, wget, and unzip in one layer and clean up after
+# Install Java 8 and necessary packages
 RUN yum -y update && \
-    yum -y install java-1.8.0-openjdk-devel wget unzip && \
-    yum clean all && \
-    rm -rf /var/cache/yum
+    yum -y install java-1.8.0-openjdk-devel wget && \
+    yum clean all
 
-# Download and extract Apache Tomcat
+# Install the unzip package
+RUN yum -y install unzip
+
+# Download and extract Tomcat
 RUN wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.91/bin/apache-tomcat-8.5.91.zip && \
     unzip apache-tomcat-8.5.91.zip -d /opt && \
     rm apache-tomcat-8.5.91.zip && \
@@ -21,9 +23,8 @@ RUN wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.91/bin/apache-tomcat-8.5.
 # Set executable permissions for catalina.sh
 RUN chmod +x $CATALINA_HOME/bin/catalina.sh
 
-# Expose custom Tomcat port
+# Expose the default Tomcat port
 EXPOSE 8090
 
-# Start Tomcat using the exec form
-CMD ["/opt/tomcat/bin/catalina.sh", "run"]
-
+# Set the command to start Tomcat
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]
