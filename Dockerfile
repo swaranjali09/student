@@ -5,7 +5,7 @@ FROM centos:7
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk \
     CATALINA_HOME=/opt/tomcat \
     PATH=$CATALINA_HOME/bin:$PATH
-
+    
 # Install Java 8 and necessary packages
 RUN yum -y update && \
     yum -y install java-1.8.0-openjdk-devel wget && \
