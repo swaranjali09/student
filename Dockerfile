@@ -1,5 +1,5 @@
 # Use the CentOS 7 base image
-FROM rockylinux:8
+FROM centos:7
 
 # Set environment variables
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk \
